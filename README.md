@@ -45,7 +45,7 @@ Each tool is developed as a separate project, with the long-term goal of creatin
 | 14 | Digital Forensics Toolkit | 📌 Planned |
 | 15 | Encrypted Security Suite | 📌 Planned |
 
-## 📂 Project Structure
+## 📂 Intended Local Project Structure
 
 ```text
 encrypted-security-tools/
@@ -57,67 +57,67 @@ encrypted-security-tools/
     └── scanner.py
 ```
 
-Additional project directories will be introduced as development progresses.
+This repository currently contains project documentation. The structure above describes the local learning project; scanner source code is not included in the current repository tree.
 
 ## 🔍 Project 01: TCP Port Scanner
 
 The first tool is a simple Python TCP port scanner designed to check whether selected TCP ports accept connections on an authorized host.
 
-### Features
+### Updated Terminal Interface
 
-- TCP connection scanning
-- Common network port inspection
-- Configurable connection timeout
-- Open port detection
-- Basic error handling
-- Python standard library implementation
+The locally developed scanner includes:
 
-### Technologies
+- Interactive IPv4 input with validation and a default of `127.0.0.1`
+- A branded header and clearly aligned results
+- Live progress in an interactive terminal
+- Colour-coded statuses in supported terminals, with plain-text fallback
+- A summary of open, closed, and inconclusive results, plus elapsed time
+- An option to scan another target without restarting
+- Clean cancellation with Ctrl+C
 
-- Python 3
-- Socket Programming
-- TCP/IP Networking
+### Scan Details
 
-### Installation
+| Setting | Current behaviour |
+|---|---|
+| Protocol | TCP connection scan |
+| Target | One IPv4 address per scan |
+| Ports | 21, 22, 80, 443, 3306, 8080 |
+| Timeout | 1 second per port |
+| Dependencies | Python standard library only |
 
-**1. Clone the repository**
+Service labels show common uses of port numbers; they do not identify the actual running service.
+
+### Run Your Local Scanner
+
+**The source file is not distributed in this repository.** If you already have the locally developed `scanner.py`, place it inside `port-scanner/` in your local project.
+
+From the project root, run:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/encrypted-security-tools.git
+python port-scanner/scanner.py
 ```
 
-**2. Navigate to the project**
+Use `python3` if that is your Python command.
 
-```bash
-cd encrypted-security-tools/port-scanner
-```
+1. Enter the IPv4 address of a device you own or have permission to test.
+2. Press Enter without typing an address to scan your own computer.
+3. Review the results and summary.
+4. Enter `y` to scan another target, or press Enter to finish.
 
-**3. Run the scanner**
+### Understanding Results
 
-```bash
-python scanner.py
-```
+| Status | Meaning |
+|---|---|
+| OPEN | A TCP connection succeeded. |
+| CLOSED | The connection was refused. |
+| NO RESPONSE | The connection timed out or did not receive a conclusive response. |
+| NETWORK ERROR | A network or socket error prevented a conclusive result. |
 
-No third-party Python packages are required for the initial scanner.
+A timeout does not prove that a port is filtered. An open port does not, by itself, establish a vulnerability.
 
-### Example Output
+### Next Improvements
 
-The following is an illustrative output from a host with a listening service on port 8080:
-
-```text
-Scanning 127.0.0.1
-
-[CLOSED/FILTERED] Port 21
-[CLOSED/FILTERED] Port 22
-[CLOSED/FILTERED] Port 80
-[CLOSED/FILTERED] Port 443
-[CLOSED/FILTERED] Port 3306
-[OPEN] Port 8080
-
-Scan completed.
-```
-
-**Note:** A failed TCP connection does not always distinguish a closed port from a filtered or unreachable port.
+Custom port ranges, concurrent scanning, command-line arguments, and report export are planned learning steps.
 
 ## 🧠 Learning Areas
 
